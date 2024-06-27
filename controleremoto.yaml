@@ -1,0 +1,36 @@
+esphome:
+  name: controleremoto
+  friendly_name: controleremoto
+
+esp8266:
+  board: nodemcuv2
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "Sua chave da api(gerada quando escolhe a placa na tela do ESPHome)"
+
+wifi:
+  ssid: "seu ssid do wifi"
+  password: "senha do wifi"
+
+remote_transmitter:
+  pin: D2
+  carrier_duty_percent: 50%
+
+button:
+  - platform: template
+    name: "WemosD1 - Ligar climatizador"
+    on_press:
+      - remote_transmitter.transmit_nec:
+          address: 0x1
+          command: 0x1D
+  - platform: template
+    name: "WemosD1 - Velocidade Climatizador"
+    on_press:
+      - remote_transmitter.transmit_nec:
+          address: 0x1
+          command: 0x1A
